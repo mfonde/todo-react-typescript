@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { TodoListItem } from './TodoListItem';
+
+const initialTodos: Todo[] = [
+    {text: "Walk the dog", complete: true},
+    {text: "Write app", complete: false}
+]
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    const [todos, setTodos] = useState(initialTodos);
+
+    // const toggleTodo = (selectedTodo: Todo) => {
+        //IF IMPORTING ToggleTodo FROM TYPE FILE, YOU HAVE ALREADY SPECIFIED THE TYPE.
+        const toggleTodo: ToggleTodo = selectedTodo => {
+        const newTodos = todos.map(todo => {
+            if (todo === selectedTodo) {
+                return {
+                    // text: todo.text,
+                    // ...todo
+                    ...todo,
+                    complete: !todo.complete
+                }
+            }
+            return todo;
+        })
+        setTodos(newTodos);
+    }
+
+    return (
+        <React.Fragment>
+            <TodoListItem todo={todos[0]} toggleTodo={toggleTodo} />
+            <TodoListItem todo={todos[1]} toggleTodo={toggleTodo} />
+        </React.Fragment>
+    );
+};
 
 export default App;
