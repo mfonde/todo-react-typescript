@@ -1,7 +1,19 @@
 import React from 'react';
+import { TodoListItem } from './TodoListItem';
 
-export const TodoList = ({ todos, toggleTodo }) => {
-    <ul>
-        {todos.map()}
-    </ul>
+interface TodoListProps {
+    todos: Todo[],
+    toggleTodo: ToggleTodo
+}
+
+export const TodoList: React.FC<TodoListProps> = ({todos, toggleTodo}) => {
+    return (
+        <ul>
+            {todos.map(todo => {
+                return (
+                    <TodoListItem key={todo.text} todo={todo} toggleTodo={toggleTodo} />
+                )
+            })}
+        </ul>
+    )
 }
